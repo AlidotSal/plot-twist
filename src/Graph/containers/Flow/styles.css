@@ -1,0 +1,259 @@
+/*globals*/
+
+.container {
+  position: relative;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI, Roboto";
+  user-select: none;
+  overflow: hidden;
+  background-color: var(--canvasBG);
+  contain: paint;
+}
+.container > svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+svg > g {
+  transform-origin: center top;
+}
+canvas {
+  position: absolute;
+  pointer-events: none;
+}
+
+.nodes .selected > p {
+  box-shadow: inset 0 0 0 2px #ffcb74;
+  color: var(--nodeC);
+}
+
+/*back-drop*/
+section.backdrop,
+section.backdrop.selected {
+  position: absolute;
+  min-width: 5rem;
+  min-height: 5rem;
+}
+.backdrop svg {
+  z-index: -1;
+}
+.backdrop > h1 {
+  cursor: grab;
+  margin: 0.2rem;
+  text-align: center;
+  user-select: none;
+  background-color: rgb(255 255 255 / 0.5);
+}
+.backdrop.selected > h1 {
+  background-color: rgb(235 177 52 / 0.5);
+}
+.backdrop > span {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 50%,
+    rgb(255 255 255 / 0.5) 50%,
+    rgb(255 255 255 / 0.5) 100%
+  );
+}
+.backdrop.selected > span {
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 50%,
+    rgb(235 177 52 / 0.5) 50%,
+    rgb(235 177 52 / 0.5) 100%
+  );
+}
+.backdrop > span:hover {
+  cursor: nwse-resize;
+}
+svg .rect {
+  z-index: -1;
+}
+
+/* default */
+section.default {
+  position: absolute;
+  z-index: 1;
+}
+.default > p {
+  display: grid;
+  place-items: center;
+  padding: 0.25rem;
+  user-select: none;
+  cursor: grab;
+  overscroll-behavior: auto;
+  line-height: 1.25rem;
+}
+.default.selected > p {
+  background-color: #446b9e;
+}
+.default > span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+/* dot */
+section.dot {
+  position: absolute;
+  user-select: none;
+  cursor: grab;
+  overscroll-behavior: auto;
+  border-radius: 50%;
+  z-index: 1;
+}
+section.dot:hover {
+  z-index: 2;
+}
+.dot.selected {
+  background-color: #446b9e;
+}
+/* sticky */
+.sticky {
+  position: absolute;
+  z-index: 1;
+}
+.sticky > p {
+  padding: 1rem 0.8rem;
+  min-width: 5rem;
+  user-select: none;
+  cursor: grab;
+  overscroll-behavior: auto;
+  line-height: 1.25rem;
+  border-radius: 20px 0 0 0;
+  outline: 1px solid var(--nodeBR);
+}
+.sticky > p:hover {
+  z-index: 2;
+}
+.sticky p p,
+.sticky p h1,
+.sticky p h2 {
+  margin-block: 0.65em;
+}
+
+/* edges */
+.edge path:nth-child(1) {
+  translate: 0 0rem;
+}
+.edge path:nth-child(2) {
+  translate: 0 1rem;
+}
+.edge path:nth-child(3) {
+  translate: 0 2rem;
+}
+.edge path:nth-child(4) {
+  translate: 0 3rem;
+}
+.edges .animated {
+  animation: dash 0.5s linear infinite;
+  stroke-dasharray: 10;
+}
+.edges .arrow {
+  transform: translateY(5px) rotate(-90deg);
+}
+.edges foreignObject {
+  offset-rotate: 90deg;
+}
+.edges foreignObject > p {
+  width: max-content;
+  font-size: 11px;
+  padding: 0 6px 2px 6px;
+}
+.edges .selected,
+.selected + polygon {
+  stroke: orange;
+  stroke-width: 3;
+}
+
+.split {
+  cursor: col-resize;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.2em;
+  padding: 0.25rem;
+  font-family: "Ovink", sans-serif;
+  color: var(--text);
+  background-color: var(--sideBG);
+}
+
+.side .clear {
+  cursor: default;
+}
+
+.side .attributes {
+  display: grid;
+  grid-template-rows: 1.8em;
+  gap: 1px;
+  padding: 1rem;
+  font-size: 14px;
+  line-height: 2;
+  border: 1px solid rgb(100 100 100);
+}
+.attributes > div {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  gap: 0.6em;
+}
+.attributes span {
+  padding-top: 2px;
+  text-align: end;
+  white-space: nowrap;
+}
+.attributes input:not([type="checkbox"]),
+textarea {
+  font-family: inherit;
+  height: 90%;
+  padding-top: 3px;
+  border: 1px solid var(--inputBR);
+  border-radius: 3px;
+  background-color: var(--inputBG);
+  box-shadow: inset 0 var(--shadowVer) 2px var(--shadow);
+}
+.attributes textarea {
+  height: fit-content;
+  padding: 0.6em;
+  overflow: hidden;
+}
+.attributes select {
+  width: 8em;
+}
+.side p {
+  font-weight: 900;
+}
+.side .group-title {
+  grid-template-columns: 1fr 10fr;
+}
+.side .divider {
+  height: 10px;
+  background: linear-gradient(
+    0deg,
+    var(--sideBG) 0%,
+    var(--sideBG) 75%,
+    var(--divider1) 75%,
+    var(--divider1) 87%,
+    var(--divider2) 87%,
+    var(--divider2) 100%
+  );
+}
+.side .export {
+  display: flex;
+  gap: 0.4rem;
+  margin: 1rem 0;
+  height: 2rem;
+}
+.export button {
+  width: 35%;
+}
